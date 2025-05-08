@@ -10,7 +10,7 @@ services:
   wg-easy:
     environment:
       - LANG=en
-      - WG_HOST=vpn.space-alien.ru
+      - WG_HOST=vpn.your-domain.ru
       - PASSWORD_HASH=$$hashOfYourPassWordWithoutQotesmWrite$before$if$inHash
       - VIRTUAL_HOST=vpn.your-domain.ru
       - VIRTUAL_PORT=51821
