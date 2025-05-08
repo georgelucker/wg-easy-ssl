@@ -30,7 +30,7 @@ cd wg-easy-ssl
 
 Откройте docker-compose.yml и замените следующие значения на свои:
 
-      - WG_HOST=vpn.space-alien.ru              # ← ваш реальный домен
+      - WG_HOST=vpn.your-domain.ru              # ← ваш реальный домен
       - VIRTUAL_HOST=vpn.your-domain.ru         # ← тот же или другой домен
       - LETSENCRYPT_HOST=vpn.your-domain.ru     # ← домен для HTTPS
       - LETSENCRYPT_EMAIL=yourmail@gmail.com    # ← ваша почта
