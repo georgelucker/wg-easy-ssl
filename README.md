@@ -37,15 +37,27 @@ cd wg-easy-ssl
 
 ⚠️ Убедитесь, что ваш домен указывает на IP-адрес сервера, где запускается этот compose.
 
-2. Сгенерируйте хеш пароля
+2. Сгенерируйте хеш пароля администратора
 
-Чтобы задать пароль администратора для интерфейса wg-easy, необходимо использовать bcrypt-хеш. Вы можете сгенерировать его так:
+Для защиты интерфейса wg-easy используется bcrypt-хеш. Его можно сгенерировать командой:
 
-docker run --rm -it ghcr.io/wg-easy/wg-easy:14 sh -c "node -e \"console.log(require('bcrypt').hashSync('ВашПароль', 10))\""
+docker run ghcr.io/wg-easy/wg-easy wgpw 'ВашПароль'
 
-Скопируйте полученную строку и вставьте в переменную PASSWORD_HASH без изменений:
+Пример вывода:
 
-- PASSWORD_HASH=$2b$10$3kK...
+PASSWORD_HASH='$2b$12$coPqCsPtcFO.Ab99xylBNOW4.Iu7OOA2/ZIboHN6/oyxca3MWo7fW'
+
+❗ Важно:
+
+Обязательно заключайте пароль в одинарные кавычки при выполнении команды.
+
+НЕ копируйте одинарные кавычки в docker-compose.yml.
+
+Замените каждый символ $ в хеше на двойной $$.
+
+Пример:
+
+- PASSWORD_HASH=$$2b$$12$$coPqCsPtcFO.Ab99xylBNOW4.Iu7OOA2/ZIboHN6/oyxca3MWo7fW
 
 3. Запуск
 
