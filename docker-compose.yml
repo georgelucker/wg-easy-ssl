@@ -1,0 +1,67 @@
+volumes:
+  etc_wireguard:
+  nginx_data:
+  nginx_conf:
+  certbot_data:
+  vhost_data:
+  html_data:
+
+services:
+  wg-easy:
+    environment:
+      - LANG=en
+      - WG_HOST=vpn.space-alien.ru
+      - PASSWORD_HASH=$$2a$12$$JP.FWBs5mxOXGa3LMV.MEOGmqPKcu.uFS4wPH5w/ykaQIJqTuwrga
+      - VIRTUAL_HOST=vpn.space-alien.ru
+      - VIRTUAL_PORT=51821
+      - LETSENCRYPT_HOST=vpn.space-alien.ru
+      - LETSENCRYPT_EMAIL=hiterra.pro@gmail.com
+
+    image: ghcr.io/wg-easy/wg-easy:14
+    container_name: wg-easy
+    volumes:
+      - etc_wireguard:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+
+  nginx:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certbot_data:/etc/nginx/certs
+      - vhost_data:/etc/nginx/vhost.d
+      - html_data:/usr/share/nginx/html
+    environment:
+      - VIRTUAL_HOST=vpn.space-alien.ru
+      - VIRTUAL_PORT=51821
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - wg-easy
+
+  nginx-letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: nginx-letsencrypt
+    restart: unless-stopped
+    environment:
+      - DEFAULT_EMAIL=hiterra.pro@gmail.com
+    depends_on:
+      - nginx
+    volumes_from:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certbot_data:/etc/nginx/certs
+      - vhost_data:/etc/nginx/vhost.d
+      - html_data:/usr/share/nginx/html
