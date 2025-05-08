@@ -11,11 +11,11 @@ services:
     environment:
       - LANG=en
       - WG_HOST=vpn.space-alien.ru
-      - PASSWORD_HASH=$$2a$12$$JP.FWBs5mxOXGa3LMV.MEOGmqPKcu.uFS4wPH5w/ykaQIJqTuwrga
-      - VIRTUAL_HOST=vpn.space-alien.ru
+      - PASSWORD_HASH=$$hashOfYourPassWordWithoutQotesmWrite$before$if$inHash
+      - VIRTUAL_HOST=vpn.your-domain.ru
       - VIRTUAL_PORT=51821
-      - LETSENCRYPT_HOST=vpn.space-alien.ru
-      - LETSENCRYPT_EMAIL=hiterra.pro@gmail.com
+      - LETSENCRYPT_HOST=vpn.your-domain.ru
+      - LETSENCRYPT_EMAIL=yourmail@gmail.com
 
     image: ghcr.io/wg-easy/wg-easy:14
     container_name: wg-easy
@@ -42,7 +42,7 @@ services:
       - vhost_data:/etc/nginx/vhost.d
       - html_data:/usr/share/nginx/html
     environment:
-      - VIRTUAL_HOST=vpn.space-alien.ru
+      - VIRTUAL_HOST=vpn.your-domain.ru
       - VIRTUAL_PORT=51821
     ports:
       - "80:80"
@@ -55,7 +55,7 @@ services:
     container_name: nginx-letsencrypt
     restart: unless-stopped
     environment:
-      - DEFAULT_EMAIL=hiterra.pro@gmail.com
+      - DEFAULT_EMAIL=yourmail@gmail.com
     depends_on:
       - nginx
     volumes_from:
