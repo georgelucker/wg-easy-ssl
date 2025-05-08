@@ -40,9 +40,9 @@ cd wg-easy-ssl
 2. Сгенерируйте хеш пароля администратора
 
 Для защиты интерфейса wg-easy используется bcrypt-хеш. Его можно сгенерировать командой:
-
+```bash
 docker run ghcr.io/wg-easy/wg-easy wgpw 'ВашПароль'
-
+```
 Пример вывода:
 
 PASSWORD_HASH='$2b$12$coPqCsPtcFO.Ab99xylBNOW4.Iu7OOA2/ZIboHN6/oyxca3MWo7fW'
@@ -62,9 +62,9 @@ PASSWORD_HASH='$2b$12$coPqCsPtcFO.Ab99xylBNOW4.Iu7OOA2/ZIboHN6/oyxca3MWo7fW'
 3. Запуск
 
 После настройки переменных, запустите контейнеры:
-
+```bash
 docker compose up -d
-
+```
 4. Откройте интерфейс
 
 Через несколько секунд после запуска откройте в браузере:
