@@ -23,5 +23,5 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/yourusername/wireguard-nginx-compose.git
-   cd wireguard-nginx-compose
+   git clone https://github.com/georgelucker/wg-easy-ssl.git
+   cd wg-easy-ssl
